@@ -1,0 +1,43 @@
+# Production overlay: run alongside docker-compose.yml with
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# Differences from the dev compose file:
+#  - no bind-mounts / --reload (runs the built image as-is)
+#  - multiple uvicorn workers behind Caddy, which also terminates TLS
+#  - Postgres/Redis data on named volumes; point OBJECT_STORAGE_BACKEND=s3
+#    (see .env.example) rather than relying on any local volume for graphs
+version: "3.9"
+
+services:
+  api:
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+    volumes: []
+    restart: unless-stopped
+
+  worker:
+    command: celery -A app.workers.celery_app worker --loglevel=INFO --concurrency=4
+    volumes: []
+    restart: unless-stopped
+
+  postgres:
+    restart: unless-stopped
+
+  redis:
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+
+volumes:
+  caddy_data:
+  caddy_config:

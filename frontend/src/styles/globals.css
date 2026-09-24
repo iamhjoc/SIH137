@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-base-950 text-ink-100 antialiased;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(94, 234, 212, 0.05), transparent 40%),
+      linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+  }
+
+  ::selection {
+    background: rgba(94, 234, 212, 0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  :focus-visible {
+    outline: 2px solid theme("colors.signal.DEFAULT");
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply bg-base-900/80 border border-base-700 rounded-lg shadow-panel backdrop-blur-sm;
+  }
+
+  .panel-inset {
+    @apply bg-base-850 border border-base-700 rounded-md;
+  }
+
+  .label-caps {
+    @apply text-[11px] font-medium uppercase tracking-[0.12em] text-ink-500;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-signal text-base-950
+           font-medium px-4 py-2 text-sm transition-colors hover:bg-signal-dim
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-base-600
+           bg-base-850 text-ink-100 font-medium px-4 py-2 text-sm transition-colors
+           hover:border-base-500 hover:bg-base-800;
+  }
+
+  .input-field {
+    @apply w-full rounded-md border border-base-600 bg-base-900 px-3 py-2 text-sm text-ink-100
+           placeholder:text-ink-700 focus:border-signal/60 outline-none transition-colors;
+  }
+}

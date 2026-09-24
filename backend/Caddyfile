@@ -1,0 +1,6 @@
+# Automatic HTTPS via Let's Encrypt -- replace with your real domain.
+# Caddy handles certificate issuance/renewal automatically; no manual
+# certbot steps needed.
+api.yourdomain.com {
+    reverse_proxy api:8000
+}

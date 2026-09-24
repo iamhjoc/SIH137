@@ -1,0 +1,28 @@
+# --- Secrets -----------------------------------------------------------
+# Real API keys and DB credentials live in .env files. Never commit them --
+# this repo previously shipped with live Mappls/TomTom keys committed
+# directly (see backend/.env's security note). Only .env.example (which
+# holds placeholders) should ever be committed.
+.env
+.env.*
+!.env.example
+
+# --- Python --------------------------------------------------------------
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# --- Node / frontend -----------------------------------------------------
+node_modules/
+dist/
+.vite/
+
+# --- Editors / OS ----------------------------------------------------------
+.DS_Store
+.idea/
+.vscode/
+
+# --- Local object storage (filesystem backend dev data) -------------------
+backend/data/object-storage/
