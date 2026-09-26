@@ -6,6 +6,7 @@ sqlalchemy[asyncio]
 alembic
 asyncpg
 psycopg2-binary
+psycopg[binary]
 geoalchemy2
 redis
 celery
